@@ -38,29 +38,41 @@ uart = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=0.25)
 # uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=0.25)
 
 # Connect to a PM2.5 sensor over UART
-# from adafruit_pm25.uart import PM25_UART
-# pm25 = PM25_UART(uart, reset_pin)
+from adafruit_pm25.uart import PM25_UART
+pm25 = PM25_UART(uart, reset_pin)
 
+x = time.time()
+y = 0
 # Create library object, use 'slow' 100KHz frequency!
-i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
+#i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
 # Connect to a PM2.5 sensor over I2C
-pm25 = PM25_I2C(i2c, reset_pin)
+#pm25 = PM25_I2C(i2c, reset_pin)
 
 print("Found PM2.5 sensor, reading data...")
-
-while True:
-    time.sleep(1)
+pm10 = []
+pm2 = []
+pm100 = []
+while y-x<=5:
 
     try:
         aqdata = pm25.read()
+        pm10.append(aqdata["pm10 standard"])
+        pm2.append(aqdata["pm25 standard"])
+        pm100.append(aqdata["pm100 standard"])
+        
+
         #print(aqdata)
     except RuntimeError:
         print("Unable to read from sensor, retrying...")
         continue
+    y = time.time()
+    time.sleep(1)
 
-    dict= {"PM 1.0": aqdata["pm10 standard"],  "PM 2.5":aqdata["pm25 standard"] ,"PM10":aqdata["pm100 standard"] }
-    df = pd.DataFrame(dict)
-    df.to_csv('aqdata.csv')
+ 
+
+dict= {"PM 1.0":pm10 ,  "PM 2.5":pm2 ,"PM10":pm100 }
+df = pd.DataFrame(dict)
+df.to_csv('aqdata.csv')
 
 
    
