@@ -34,9 +34,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--runtime', type= float, required= True)
 parser.add_argument('--filename', type = str, required = True )
 args = parser.parse_args()
-a = time.time() + args.runtime
+b = time.time() + args.runtime
 filename = args.filename
-while time.time()<a:
+while time.time()<b:
     t.append(time.ctime())
     T.append(bme680.temperature)
     g.append(bme680.gas)
