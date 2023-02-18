@@ -37,7 +37,7 @@ args = parser.parse_args()
 b = time.time() + args.runtime
 filename = args.filename
 while time.time()<b:
-    t.append(time.ctime())
+    t.append(time.time())
     T.append(bme680.temperature)
     g.append(bme680.gas)
     h.append(bme680.relative_humidity)
