@@ -2,6 +2,7 @@ import time
 import random
 import argparse
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--runtime', type= float, required= False)
 args = parser.parse_args()
@@ -11,4 +12,5 @@ while time.time()<a:
     value = random.random()
     print(itime, value)
     time.sleep(1)
+
 
