@@ -28,7 +28,7 @@ curr = 0
 times = []
 counts = []
 while(curr <= reft):
-    time.sleep(60)
+    time.sleep(10)
     now = datetime.now()
     timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
     print(f"{timestamp} - Counts detected: {count}")
