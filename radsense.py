@@ -41,4 +41,4 @@ while(curr <= reft):
 
 dict = {'time':times, 'counts': counts}
 df = pd.DataFrame(dict)
-df.to_csv(filename)
+df.to_csv(filename,index=False)
