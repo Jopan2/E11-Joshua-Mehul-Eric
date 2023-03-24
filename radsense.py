@@ -8,6 +8,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--runtime', type= float, required= True)
 parser.add_argument('--filename', type = str, required = True )
 args = parser.parse_args()
+runtime = args.runtime
+filename = args.filename
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -21,26 +23,22 @@ def count_callback(channel):
     count += 1
 
 GPIO.add_event_detect(radiation_sensor_pin, GPIO.FALLING, callback=count_callback, bouncetime=10)
-reft = time.time() + args.runtime
+reft = time.time() + runtime
 curr = 0
 times = []
 counts = []
 while(curr <= reft):
-    try:
-        while True:
-            time.sleep(60)
-            now = datetime.now()
-            timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
-            print(f"{timestamp} - Counts detected: {count}")
-            times.append(timestamp)
-            counts.append(count)
-            count = 0
+    time.sleep(60)
+    now = datetime.now()
+    timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} - Counts detected: {count}")
+    times.append(timestamp)
+    counts.append(count)
+    count = 0
+    curr = time.time()
+    
 
-    except KeyboardInterrupt:
-        print("Script terminated.")
-        GPIO.cleanup()
-    curr = time.time() 
 
 dict = {'time':times, 'counts': counts}
 df = pd.DataFrame(dict)
-df.to_csv(args.filename)
+df.to_csv(filename)
