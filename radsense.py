@@ -13,7 +13,7 @@ filename = args.filename
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-radiation_sensor_pin = 27  # Replace this with the GPIO pin number you connected the SIG to
+radiation_sensor_pin = 17  # Replace this with the GPIO pin number you connected the SIG to
 GPIO.setup(radiation_sensor_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 count = 0
